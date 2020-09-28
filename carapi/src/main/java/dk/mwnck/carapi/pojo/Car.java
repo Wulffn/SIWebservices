@@ -1,10 +1,13 @@
 package dk.mwnck.carapi.pojo;
 
+import dk.mwnck.carapi.constants.Currency;
+
 public class Car {
 
     private String manufacturer, model, version;
     private int year;
     private String price;
+    private Currency currency; // the original currency when scraped.
 
     public Car(String manufacturer, String model, int year) {
         this.manufacturer = manufacturer;
@@ -12,12 +15,15 @@ public class Car {
         this.year = year;
     }
 
-    public Car(String manufacturer, String model, String version, int year, String price) {
+
+
+    public Car(String manufacturer, String model, String version, int year, String price, Currency currency) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.version = version;
         this.year = year;
         this.price = price;
+        this.currency = currency;
     }
 
     public String getManufacturer() {
@@ -59,6 +65,8 @@ public class Car {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public Currency getCurrency() { return currency; }
 
     @Override
     public String toString() {
