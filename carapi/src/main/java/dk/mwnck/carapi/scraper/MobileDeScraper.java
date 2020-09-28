@@ -41,6 +41,7 @@ public class MobileDeScraper implements Scraper {
         client.getOptions().setJavaScriptEnabled(false);
         try {
             String searchUrl = concatURL(car);
+            System.out.println("Going to : " + searchUrl);
             //System.out.println(client.getPage(searchUrl));
             return client.getPage(searchUrl);
         } catch (Exception e) {
@@ -57,7 +58,9 @@ public class MobileDeScraper implements Scraper {
                 .append("-")
                 .append(car.getModel())
                 .append("-")
-                .append(car.getYear());
+                .append(car.getYear())
+                .append(".html");
+
         return sb.toString();
     }
 

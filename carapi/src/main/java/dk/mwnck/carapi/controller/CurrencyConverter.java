@@ -37,7 +37,7 @@ public class CurrencyConverter {
     {
 
         // https://api.exchangeratesapi.io/latest
-        JSONObject json = new JSONObject(IOUtils.toString(new URL("https://api.exchangeratesapi.io/latest"), Charset.forName("UTF-8")));
+        JSONObject json = new JSONObject(IOUtils.toString(new URL("https://api.exchangeratesapi.io/latest?base=EUR"), Charset.forName("UTF-8")));
         System.out.println(json.toString());
     }
 
