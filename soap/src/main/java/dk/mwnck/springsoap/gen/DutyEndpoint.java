@@ -19,7 +19,11 @@ public class DutyEndpoint
     public GetCarDutyResponse getCarDuty(@RequestPayload GetCarDutyRequest request)
     {
         GetCarDutyResponse response = new GetCarDutyResponse();
+
         response.setDuty(500);
+
+        for(Car car : request.getCars().car)
+            System.out.println(car.model);
 
         return response;
     }
