@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mwnck.dk/springsoap/gen"
+           targetNamespace="http://www.mwnck.dk/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getCarDutyRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cars" type="tns:carlist"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCarDutyResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="duty" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="car">
+        <xs:sequence>
+            <xs:element type="xs:string" name="manufacturer"/>
+            <xs:element type="xs:string" name="model"/>
+            <xs:element type="xs:string" name="kilometer"/>
+            <xs:element type="xs:double" name="price"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="carlist">
+        <xs:sequence>
+            <xs:element type="tns:car" name="car" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+   <!-- <xs:complexType name="carlist">
+        <xs:sequence>
+            <xs:element type="xs:string" name="manufacturer"/>
+            <xs:element type="xs:string" name="model"/>
+            <xs:element type="xs:string" name="kilometer"/>
+            <xs:element type="xs:short" name="price"/>
+        </xs:sequence>
+    </xs:complexType>-->
+
+</xs:schema>
