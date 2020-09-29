@@ -14,7 +14,7 @@ public class MobileDeScraper implements Scraper {
     public List<Car> getCars(Car searchCar) {
 
         List<Car> cars = null;
-        List<HtmlElement> items = (List<HtmlElement>) getPage(searchCar).getByXPath("//div[contains(@class,'cBox-body')]");
+        List<HtmlElement> items = (List<HtmlElement>) getPage(searchCar).getByXPath("//div[contains(@class,'cBox-body--resultitem')]");
         System.out.println("Fandt items: " + items.size());
         if (items.isEmpty()) {
             return null;
