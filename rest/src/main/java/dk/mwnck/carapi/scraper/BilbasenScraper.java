@@ -24,13 +24,12 @@ public class BilbasenScraper implements Scraper {
             for (HtmlElement htmlItem : items) {
 
                 HtmlElement version = htmlItem.getFirstByXPath(".//a[contains(@class,'listing-heading')]");
-                System.out.print(version.asText());
                 HtmlElement price = htmlItem.getFirstByXPath(".//div[contains(@class, 'col-xs-3 listing-price')]");
-                System.out.println(", " +  price.asText());
-                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Currency.DKK));
+                HtmlElement km = (HtmlElement) htmlItem.getByXPath(".//div[contains(@class, 'listing-data')]").get(2);
+
+                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Integer.valueOf(km.asText().replace(".","")), Currency.DKK));
             }
         }
-
         return cars;
 
     }
@@ -41,7 +40,7 @@ public class BilbasenScraper implements Scraper {
         client.getOptions().setJavaScriptEnabled(false);
         try {
             String searchUrl = concatURL(car);
-            //System.out.println(client.getPage(searchUrl));
+            System.out.println("Going to : " + searchUrl);
             return client.getPage(searchUrl);
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,12 +58,12 @@ public class BilbasenScraper implements Scraper {
                 .append("?yearFrom=")
                 .append(car.getYear())
                 .append("&yearTo=")
-                .append(car.getYear());
+                .append(car.getYear())
+                .append("&MileageFrom=")
+                .append(car.getKm()-20000)
+                .append("&MileageTo=")
+                .append(car.getKm()+20000);
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        new BilbasenScraper().getCars(new Car("kia", "picanto", 2012));
     }
 }
 

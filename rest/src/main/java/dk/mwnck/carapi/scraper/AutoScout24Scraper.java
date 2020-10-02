@@ -23,8 +23,13 @@ public class AutoScout24Scraper implements Scraper {
             for (HtmlElement htmlItem : items) {
                 HtmlElement version = ((HtmlElement) htmlItem.getFirstByXPath(".//h2[@class='cldt-summary-version sc-ellipsis']"));
                 HtmlElement price = ((HtmlElement) htmlItem.getFirstByXPath(".//span[@class='cldt-price sc-font-xl sc-font-bold']"));
-                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Currency.EUR));
+                HtmlElement km = (HtmlElement) htmlItem.getFirstByXPath(".//li[@data-type='mileage']");
+
+                int intKm = Integer.parseInt(km.asText().replaceAll("[^0-9]+", ""));
+
+                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR));
             }
+
         }
         return cars;
     }
@@ -33,8 +38,10 @@ public class AutoScout24Scraper implements Scraper {
         WebClient client = new WebClient();
         client.getOptions().setCssEnabled(false);
         client.getOptions().setJavaScriptEnabled(false);
+
         try {
             String searchUrl = concatURL(car);
+            System.out.println("Going to : " + searchUrl);
             return client.getPage(searchUrl);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,8 +59,11 @@ public class AutoScout24Scraper implements Scraper {
                 .append(car.getYear())
                 .append("&fregfrom=")
                 .append(car.getYear())
-                .append("&atype=C&");
+                .append("&atype=C&")
+                .append("&kmto=")
+                .append(car.getKm()+20000)
+                .append("&kmfrom=")
+                .append(car.getKm()-20000);
         return sb.toString();
     }
-
 }

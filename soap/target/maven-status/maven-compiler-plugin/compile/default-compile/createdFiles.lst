@@ -1,9 +1,9 @@
 dk\mwnck\springsoap\gen\GetCarDutyResponse.class
 dk\mwnck\springsoap\gen\Application.class
-dk\mwnck\springsoap\gen\Carlist.class
 dk\mwnck\springsoap\gen\package-info.class
 dk\mwnck\springsoap\gen\WebServiceConfig.class
 dk\mwnck\springsoap\gen\DutyEndpoint.class
 dk\mwnck\springsoap\gen\Car.class
 dk\mwnck\springsoap\gen\GetCarDutyRequest.class
 dk\mwnck\springsoap\gen\ObjectFactory.class
+dk\mwnck\springsoap\gen\DutyCalculator.class

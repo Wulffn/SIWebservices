@@ -8,23 +8,27 @@ public class Car {
     private int year;
     private String price;
     private Currency currency; // the original currency when scraped.
+    private int km;
 
-    public Car(String manufacturer, String model, int year) {
+    public Car(String manufacturer, String model, int year, int km) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.year = year;
+        this.km = km;
     }
 
 
 
-    public Car(String manufacturer, String model, String version, int year, String price, Currency currency) {
+    public Car(String manufacturer, String model, String version, int year, String price, int km, Currency currency) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.version = version;
         this.year = year;
         this.price = price;
+        this.km = km;
         this.currency = currency;
     }
+
 
     public String getManufacturer() {
         return manufacturer;
@@ -62,11 +66,19 @@ public class Car {
         return version;
     }
 
+    public int getKm() { return km; }
+
+    public void setKm(int km) {
+        this.km = km;
+    }
+
     public void setVersion(String version) {
         this.version = version;
     }
 
     public Currency getCurrency() { return currency; }
+
+    public void setCurrency(Currency currency) {this.currency = currency;}
 
     @Override
     public String toString() {

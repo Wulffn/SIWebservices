@@ -1,6 +1,7 @@
 package dk.mwnck.carapi.scraper;
 
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import dk.mwnck.carapi.constants.Currency;
@@ -21,13 +22,15 @@ public class MobileDeScraper implements Scraper {
         } else {
             cars = new ArrayList<>();
 
-            for (HtmlElement htmlItem : items) {
 
-                HtmlElement version = htmlItem.getFirstByXPath(".//span[contains(@class,'h3 u-text-break-word')]");
-                System.out.print(version.asText());
-                HtmlElement price = htmlItem.getFirstByXPath(".//span[contains(@class, 'h3 u-block')]");
-                System.out.println(", " +  price.asText());
-                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Currency.EUR));
+            for (HtmlElement htmlElement : items) {
+                HtmlElement km = htmlElement.getFirstByXPath(".//div[contains(@class,'vehicle-data--ad-with-price-rating-label')]");
+                HtmlElement version = htmlElement.getFirstByXPath(".//span[contains(@class,'h3 u-text-break-word')]");
+                HtmlElement price = htmlElement.getFirstByXPath(".//span[contains(@class, 'h3 u-block')]");
+                int intKm = Integer.parseInt(km.asText().split(",")[1].replaceAll("[^0-9]+", ""));
+                // filter on mileage.
+                if (intKm >= searchCar.getKm() - 20000 && intKm <= searchCar.getKm()+20000)
+                    cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR));
             }
         }
 
@@ -64,9 +67,6 @@ public class MobileDeScraper implements Scraper {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        new MobileDeScraper().getCars(new Car("kia", "picanto", 2012));
-    }
 }
 
 

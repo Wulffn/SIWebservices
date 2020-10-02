@@ -5,7 +5,9 @@
     <xs:element name="getCarDutyRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="cars" type="tns:carlist"/>
+                <!--<xs:element name="cars" type="tns:carlist"/>-->
+                <xs:element name="taxatedCar" type="tns:car" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:element name="car" type="tns:car" maxOccurs="unbounded" minOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -20,26 +22,7 @@
 
     <xs:complexType name="car">
         <xs:sequence>
-            <xs:element type="xs:string" name="manufacturer"/>
-            <xs:element type="xs:string" name="model"/>
-            <xs:element type="xs:string" name="kilometer"/>
             <xs:element type="xs:double" name="price"/>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="carlist">
-        <xs:sequence>
-            <xs:element type="tns:car" name="car" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-   <!-- <xs:complexType name="carlist">
-        <xs:sequence>
-            <xs:element type="xs:string" name="manufacturer"/>
-            <xs:element type="xs:string" name="model"/>
-            <xs:element type="xs:string" name="kilometer"/>
-            <xs:element type="xs:short" name="price"/>
-        </xs:sequence>
-    </xs:complexType>-->
-
 </xs:schema>
