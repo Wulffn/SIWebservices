@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import dk.mwnck.carapi.constants.Country;
 import dk.mwnck.carapi.constants.Currency;
 import dk.mwnck.carapi.pojo.Car;
 
@@ -12,6 +13,10 @@ import java.util.List;
 
 public class AutoScout24Scraper implements Scraper {
 
+    @Override
+    public Country getCountry() {
+        return Country.DE;
+    }
 
     public List<Car> getCars(Car searchCar) {
         List<Car> cars = null;
@@ -27,7 +32,7 @@ public class AutoScout24Scraper implements Scraper {
 
                 int intKm = Integer.parseInt(km.asText().replaceAll("[^0-9]+", ""));
 
-                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR));
+                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR, getCountry()));
             }
 
         }

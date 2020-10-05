@@ -3,6 +3,7 @@ package dk.mwnck.carapi.scraper;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import dk.mwnck.carapi.constants.Country;
 import dk.mwnck.carapi.constants.Currency;
 import dk.mwnck.carapi.pojo.Car;
 
@@ -10,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BilbasenScraper implements Scraper {
+
+    @Override
+    public Country getCountry() {
+        return Country.DK;
+    }
+
     @Override
     public List<Car> getCars(Car searchCar) {
 
@@ -27,7 +34,7 @@ public class BilbasenScraper implements Scraper {
                 HtmlElement price = htmlItem.getFirstByXPath(".//div[contains(@class, 'col-xs-3 listing-price')]");
                 HtmlElement km = (HtmlElement) htmlItem.getByXPath(".//div[contains(@class, 'listing-data')]").get(2);
 
-                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Integer.valueOf(km.asText().replace(".","")), Currency.DKK));
+                cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), Integer.valueOf(km.asText().replace(".","")), Currency.DKK, getCountry()));
             }
         }
         return cars;

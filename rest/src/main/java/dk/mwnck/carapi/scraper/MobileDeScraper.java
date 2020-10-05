@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import dk.mwnck.carapi.constants.Country;
 import dk.mwnck.carapi.constants.Currency;
 import dk.mwnck.carapi.pojo.Car;
 
@@ -11,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MobileDeScraper implements Scraper {
+
+
+    @Override
+    public Country getCountry() {
+        return Country.DE;
+    }
+
     @Override
     public List<Car> getCars(Car searchCar) {
 
@@ -30,7 +38,7 @@ public class MobileDeScraper implements Scraper {
                 int intKm = Integer.parseInt(km.asText().split(",")[1].replaceAll("[^0-9]+", ""));
                 // filter on mileage.
                 if (intKm >= searchCar.getKm() - 20000 && intKm <= searchCar.getKm()+20000)
-                    cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR));
+                    cars.add(new Car(searchCar.getManufacturer(), searchCar.getModel(), version.asText(), searchCar.getYear(), price.asText(), intKm, Currency.EUR, getCountry()));
             }
         }
 

@@ -16,13 +16,13 @@ public class DutyEndpoint
     /*@Autowired
     public DutyEndpoint(){}*/
 
+    @CrossOrigin
     @PayloadRoot(namespace=NAMESPACE_URI, localPart = "getCarDutyRequest")
     @ResponsePayload
     public GetCarDutyResponse getCarDuty(@RequestPayload GetCarDutyRequest request)
     {
         GetCarDutyResponse response = new GetCarDutyResponse();
         response.setDuty(DutyCalculator.calculate(request.getTaxatedCars(), request.getCars()));
-
         return response;
     }
 }

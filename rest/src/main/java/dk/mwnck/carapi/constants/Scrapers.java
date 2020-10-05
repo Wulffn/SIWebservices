@@ -4,6 +4,4 @@ public enum Scrapers {
     BILBASEN,
     AUTOSCOUT,
     MOBILEDE;
-
-
 }

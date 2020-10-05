@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class CurrencyConverter {
 
-    public static void change(Map<String, List<Car>> cars, Currency currency)
+    public static void change(List<Car> cars, Currency currency)
     {
         Map<String, Double> rates = null;
         try
@@ -29,21 +29,17 @@ public class CurrencyConverter {
         }
 
         if (rates != null) {
-            for (String key : cars.keySet()) {
-                for (Car car : cars.get(key)) {
+                for (Car car : cars) {
                     System.out.println(car.getPrice() + ", " + car.getCurrency());
                     float amount = Float.parseFloat(car.getPrice().replaceAll("[^0-9]", ""));
                     System.out.println(amount);
                     if (car.getCurrency() != currency) {
                         car.setPrice(String.valueOf(amount / rates.get(car.getCurrency().toString())));
                         car.setCurrency(currency);
-                    }
-                    else
-                    {
+                    } else {
                         car.setPrice(String.valueOf(amount));
                     }
                 }
-            }
         }
         else
             System.out.println("BURN, no conversion for you!");
