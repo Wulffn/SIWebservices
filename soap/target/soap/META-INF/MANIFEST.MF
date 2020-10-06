@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: mwn
+Build-Jdk: 14.0.2
+Implementation-Version: 1.0-SNAPSHOT
+Implementation-Vendor-Id: dk.mwnck
+Main-Class: ${start-class}
+
