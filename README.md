@@ -17,8 +17,8 @@ Currently not stable on all cars as car model search parameters differ from site
 
 Possible cars:
 
-Kia Picanto 2012 - 50000 km
-Opel Insignia 2017 - 50000 km
+*Kia Picanto 2012 - 50000 km
+*Opel Insignia 2017 - 50000 km
 
 Currencies implemented from open external REST:
 
