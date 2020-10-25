@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0a95eoh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0a95eoh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
   <bpmn:process id="DutyCal" name="Duty calculator" isExecutable="true">
-    <bpmn:sequenceFlow id="Flow_05npv05" sourceRef="scrape-cars" targetRef="Event_074s3yx" />
+    <bpmn:sequenceFlow id="Flow_05npv05" sourceRef="scrape-cars" targetRef="Gateway_0hw633t" />
     <bpmn:startEvent id="StartEvent_1" name="Duty calculator requested">
       <bpmn:outgoing>Flow_0w9ek4e</bpmn:outgoing>
     </bpmn:startEvent>
@@ -11,19 +11,72 @@
       <bpmn:outgoing>Flow_05npv05</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_074s3yx">
-      <bpmn:incoming>Flow_05npv05</bpmn:incoming>
+      <bpmn:incoming>Flow_0m7k6d7</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0hw633t">
+      <bpmn:incoming>Flow_05npv05</bpmn:incoming>
+      <bpmn:outgoing>Flow_18hfuvd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1gqxpdv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_1jei4e4">
+      <bpmn:incoming>Flow_18hfuvd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_18hfuvd" name="count == 0" sourceRef="Gateway_0hw633t" targetRef="Event_1jei4e4">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${count&lt;=0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1gqxpdv" name="count &#62; 0" sourceRef="Gateway_0hw633t" targetRef="Activity_1omug6p">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${count&gt;0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0qpnojh" sourceRef="Activity_1omug6p" targetRef="Activity_0fb2a3z" />
+    <bpmn:serviceTask id="Activity_1omug6p" name="Calculate duty for car" camunda:type="external" camunda:topic="parse-cars">
+      <bpmn:incoming>Flow_1gqxpdv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qpnojh</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0m7k6d7" sourceRef="Activity_0fb2a3z" targetRef="Event_074s3yx" />
+    <bpmn:userTask id="Activity_0fb2a3z" name="See resulting duty">
+      <bpmn:incoming>Flow_0qpnojh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m7k6d7</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DutyCal">
-      <bpmndi:BPMNEdge id="Flow_05npv05_di" bpmnElement="Flow_05npv05">
-        <di:waypoint x="480" y="117" />
-        <di:waypoint x="1032" y="117" />
+      <bpmndi:BPMNEdge id="Flow_18hfuvd_di" bpmnElement="Flow_18hfuvd">
+        <di:waypoint x="500" y="142" />
+        <di:waypoint x="500" y="230" />
+        <di:waypoint x="912" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="489" y="183" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gqxpdv_di" bpmnElement="Flow_1gqxpdv">
+        <di:waypoint x="525" y="117" />
+        <di:waypoint x="610" y="117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="533" y="99" width="46" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0w9ek4e_di" bpmnElement="Flow_0w9ek4e">
         <di:waypoint x="208" y="117" />
-        <di:waypoint x="380" y="117" />
+        <di:waypoint x="300" y="117" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05npv05_di" bpmnElement="Flow_05npv05">
+        <di:waypoint x="400" y="117" />
+        <di:waypoint x="475" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qpnojh_di" bpmnElement="Flow_0qpnojh">
+        <di:waypoint x="710" y="117" />
+        <di:waypoint x="770" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0m7k6d7_di" bpmnElement="Flow_0m7k6d7">
+        <di:waypoint x="870" y="117" />
+        <di:waypoint x="912" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_0hw633t_di" bpmnElement="Gateway_0hw633t" isMarkerVisible="true">
+        <dc:Bounds x="475" y="92" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05qzz3y_di" bpmnElement="Activity_1omug6p">
+        <dc:Bounds x="610" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="172" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -31,10 +84,16 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0k72qrb_di" bpmnElement="scrape-cars">
-        <dc:Bounds x="380" y="77" width="100" height="80" />
+        <dc:Bounds x="300" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_074s3yx_di" bpmnElement="Event_074s3yx">
-        <dc:Bounds x="1032" y="99" width="36" height="36" />
+        <dc:Bounds x="912" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jei4e4_di" bpmnElement="Event_1jei4e4">
+        <dc:Bounds x="912" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08c5t2i_di" bpmnElement="Activity_0fb2a3z">
+        <dc:Bounds x="770" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
