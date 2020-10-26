@@ -1,7 +1,5 @@
 # SIWebservices
 
-Live example http://dutycal.surge.sh/
-
 PoC of a car duty calculator.
 
  * React Frontend - Simple UI for entering car details.
